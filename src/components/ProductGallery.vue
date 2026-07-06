@@ -234,5 +234,8 @@ export default {
   .thumbs {
     display: none;
   }
+  .main-image {
+    display: none;
+  }
 }
 </style>
