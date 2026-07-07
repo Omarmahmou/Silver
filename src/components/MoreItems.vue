@@ -79,11 +79,11 @@ export default {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         },
-        // autoplay: {
-        //   delay: 1000,
-        //   disableOnInteraction: false,
-        // },
-        // speed: 1500,
+        autoplay: {
+          delay: 1000,
+          disableOnInteraction: false,
+        },
+        speed: 1500,
         breakpoints: {
           320: {
             slidesPerView: 3,
