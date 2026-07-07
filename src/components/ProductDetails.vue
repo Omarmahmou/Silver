@@ -1,9 +1,6 @@
 <template>
-  <div
-    class="product-details"
-
-  >
-  <!--     data-aos="fade-up-left"
+  <div class="product-details">
+    <!--     data-aos="fade-up-left"
     data-aos-duration="1100"
     data-aos-delay="100" -->
     <div class="info">
@@ -110,10 +107,21 @@
 
 <script>
 export default {
+  // props: {
+  //   product: {
+  //     type: Object,
+  //     required: true,
+  //   },
+  // },
   props: {
     product: {
       type: Object,
       required: true,
+    },
+
+    selectedColorIndex: {
+      type: Number,
+      default: 0,
     },
   },
   data() {
@@ -122,7 +130,7 @@ export default {
         features: false,
         specs: false,
       },
-      selectedColorIndex: 0,
+      // selectedColorIndex: 0,
     };
   },
 
@@ -131,8 +139,8 @@ export default {
       this.openedAccordion[section] = !this.openedAccordion[section];
     },
     selectColor(option, index) {
-      this.selectedColorIndex = index;
-      this.$emit("select-color", option.image);
+      // this.selectedColorIndex = index;
+      this.$emit("select-color", index);
     },
   },
 };
