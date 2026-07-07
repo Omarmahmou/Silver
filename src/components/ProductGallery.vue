@@ -1,6 +1,5 @@
 <template>
   <div class="gallery">
-    <!-- Desktop / Tablet: main image + thumbs -->
     <div
       class="main-image desktop-only"
       data-aos="fade-down-right"
@@ -44,8 +43,11 @@
       </button>
     </div>
 
-    <!-- Mobile: swiper slider على صور الألوان فقط -->
-    <div class="mobile-slider">
+    <div
+      class="mobile-slider"
+      data-aos="fade-down-right"
+      data-aos-duration="1200"
+    >
       <swiper :options="swiperOption" ref="colorSwiper">
         <swiper-slide
           v-for="(image, index) in colorImages"
@@ -79,17 +81,16 @@ import gallery8 from "@/assets/images/gallery8.png";
 export default {
   components: { Swiper, SwiperSlide },
   props: {
-    // الصورة الحالية بتاعة اللون (زي ما كانت قبل كده)
     selectedColorImage: {
       type: String,
       default: null,
     },
-    // كل صور الألوان بالترتيب (نفس ترتيب الـ colorOptions في ProductPage)
+
     colorImages: {
       type: Array,
       default: () => [],
     },
-    // اندكس اللون المختار حاليًا، جاي من ProductPage
+
     selectedColorIndex: {
       type: Number,
       default: 0,
@@ -110,7 +111,7 @@ export default {
         gallery8,
       ],
       isExpanded: false,
-      // فلاج عشان نمنع اللوب لما احنا اللي بنحرك السلايدر برمجيًا
+
       isSyncingFromParent: false,
       swiperOption: {
         spaceBetween: 0,
@@ -141,9 +142,6 @@ export default {
     };
   },
   computed: {
-    // swiperInstance() {
-    //   return this.$refs.colorSwiper && this.$refs.colorSwiper.swiper;
-    // },
     swiperInstance() {
       return this.$refs.colorSwiper?.swiper;
     },
