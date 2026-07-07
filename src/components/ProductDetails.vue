@@ -1,8 +1,10 @@
 <template>
-  <div class="product-details">
-    <!--     data-aos="fade-up-left"
+  <div
+    class="product-details"
+    data-aos="fade-up-left"
     data-aos-duration="1100"
-    data-aos-delay="100" -->
+    data-aos-delay="100"
+  >
     <div class="info">
       <h1 class="title">{{ product.name }}</h1>
       <span class="sku">Sku: {{ product.sku }}</span>
@@ -107,12 +109,6 @@
 
 <script>
 export default {
-  // props: {
-  //   product: {
-  //     type: Object,
-  //     required: true,
-  //   },
-  // },
   props: {
     product: {
       type: Object,
