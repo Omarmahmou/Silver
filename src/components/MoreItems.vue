@@ -1,6 +1,5 @@
-<!-- data-aos="fade-up" data-aos-delay="300" -->
 <template>
-  <div class="more-items">
+  <div class="more-items" data-aos="fade-up" data-aos-delay="300">
     <h2 class="title">Explore More <span>Items</span></h2>
     <section class="slider-section">
       <swiper :options="swiperOptions" class="explore-swiper">
