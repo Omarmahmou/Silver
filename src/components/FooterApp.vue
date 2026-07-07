@@ -9,11 +9,14 @@
 
       <div class="footer-grid">
         <div class="footer-column">
-          <h3 class="footer-title">Subscribe</h3>
+          <div class="Subscribe-desktop">
+            <h3 class="footer-title">Subscribe</h3>
 
-          <p class="footer-text">Join our newsletter</p>
+            <p class="footer-text">Join our newsletter</p>
+          </div>
+          <p class="footer-text subscibe-mobile">Subscribe to our newsletter</p>
 
-          <form class="subscribe-form">
+          <form class="subscribe-form form-desktop">
             <input type="email" placeholder="Enter your email" />
 
             <button type="submit" class="submit-btn">
@@ -36,8 +39,12 @@
               </svg>
             </button>
           </form>
+          <form class="subscribe-form form-mobile">
+            <input type="email" placeholder="Enter your email" />
+            <button type="submit" class="submit-btn-mobile">Join</button>
+          </form>
 
-          <div class="socials">
+          <div class="socials desktop-socials">
             <a
               v-for="social in socialLinks"
               :key="social.alt"
@@ -80,7 +87,19 @@
       </div>
     </div>
 
-    <div class="footer-bottom">© Copyright Rimel 2022. All rights reserved</div>
+    <div class="footer-bottom">
+      <span class="copyright-desktop"
+        >Copyright Rimel 2022. All right reserved</span
+      >
+
+      <span class="copyright-mobile">© 2026 Silver</span>
+
+      <div class="socials mobile-socials">
+        <a v-for="social in socialLinks" :key="social.alt" :href="social.link">
+          <img :src="social.icon" :alt="social.alt" />
+        </a>
+      </div>
+    </div>
   </footer>
 </template>
 
@@ -195,7 +214,6 @@ export default {
   font-size: 16px;
   line-height: 1.4;
   font-weight: 400;
-  font-size: 16px;
 }
 
 .footer-column a {
@@ -210,6 +228,7 @@ export default {
   color: #b7b7b7;
   margin-bottom: 18px;
 }
+
 .subscribe-form {
   width: 100%;
   max-width: 217px;
@@ -241,6 +260,7 @@ export default {
   outline: none;
   color: #ffffff;
   padding: 0 18px;
+  width: 100%;
 }
 
 .socials {
@@ -253,11 +273,165 @@ export default {
   font-size: 18px;
 }
 
+.mobile-socials {
+  display: none;
+}
+
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   text-align: center;
   padding: 16px 0 20px 0;
   color: #777;
   font-size: 16px;
+}
+
+.copyright-mobile {
+  display: none;
+}
+
+.subscibe-mobile {
+  display: none;
+}
+
+.form-mobile {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .footer {
+    padding: 48px 0 0;
+  }
+
+  .container {
+    padding: 0 24px;
+  }
+
+  .footer-logo {
+    width: 84px;
+    margin-bottom: 24px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+    row-gap: 20px;
+    padding-bottom: 8px;
+  }
+  .Subscribe-desktop {
+    display: none;
+  }
+  .subscibe-mobile {
+    display: flex;
+  }
+
+  .form-desktop {
+    display: none;
+  }
+
+  .footer-column:nth-child(1) {
+    grid-column: 1 / -1;
+  }
+
+  .footer-column:nth-child(2),
+  .footer-column:nth-child(3) {
+    grid-column: span 1;
+  }
+
+  .footer-column:nth-child(4) {
+    grid-column: 1 / -1;
+  }
+
+  .footer-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .footer-column p,
+  .footer-column a {
+    font-size: 14px;
+    color: #a1a1a1;
+  }
+
+  .footer-column a {
+    margin-bottom: 12px;
+  }
+
+  .footer-text {
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+
+  .subscribe-form {
+    border: 1px solid #404040;
+    max-width: 50%;
+    height: 33px;
+    margin-bottom: 24px;
+  }
+
+  .desktop-socials {
+    display: none;
+  }
+
+  .mobile-socials {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 8px;
+  }
+
+  .footer-bottom {
+    padding: 29px 24px 24px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .form-desktop {
+    display: none;
+  }
+
+  .form-mobile {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    max-width: 50%;
+    height: auto;
+    border: none;
+    margin-bottom: 32px;
+  }
+
+  .form-mobile input {
+    flex: 1;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    color: #ffffff;
+    padding: 14px 16px;
+    outline: none;
+    font-size: 14px;
+  }
+
+  .submit-btn-mobile {
+    background: #f0d29f;
+    color: #121211;
+    border: none;
+    padding: 0 24px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .copyright-mobile {
+    display: flex;
+  }
+  .copyright-desktop {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .form-mobile {
+    max-width: 100%;
+  }
 }
 </style>

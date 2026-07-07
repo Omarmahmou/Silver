@@ -1,5 +1,6 @@
+<!-- data-aos="fade-up" data-aos-delay="300" -->
 <template>
-  <div class="more-items" data-aos="fade-up" data-aos-delay="300">
+  <div class="more-items">
     <h2 class="title">Explore More <span>Items</span></h2>
     <section class="slider-section">
       <swiper :options="swiperOptions" class="explore-swiper">
@@ -79,11 +80,11 @@ export default {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         },
-        autoplay: {
-          delay: 1000,
-          disableOnInteraction: false,
-        },
-        speed: 1500,
+        // autoplay: {
+        //   delay: 1000,
+        //   disableOnInteraction: false,
+        // },
+        // speed: 1500,
         breakpoints: {
           320: {
             slidesPerView: 3,
@@ -111,6 +112,7 @@ export default {
   margin-top: 179px;
   margin-bottom: 53px;
 }
+
 .slider-section {
   margin-top: 53px;
   background: #ffffff;
@@ -186,7 +188,7 @@ export default {
 }
 ::v-deep .swiper-pagination {
   position: absolute !important;
-  bottom: 15px !important;
+  bottom: 35px !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
 }
@@ -201,5 +203,28 @@ export default {
 
 ::v-deep .swiper-pagination-bullet-active {
   background: #8d8d8d;
+}
+
+@media (max-width: 991px) {
+  .more-items {
+    margin-top: 46px;
+    margin-bottom: 20px;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+  }
+  .slider-section {
+    padding-top: 18px;
+  }
+  .title {
+    font-size: 30px;
+    text-align: center;
+  }
+}
+@media (max-width: 468px) {
+  .title {
+    font-size: 26px;
+  }
 }
 </style>

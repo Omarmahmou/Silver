@@ -2,7 +2,7 @@
   <div id="app">
     <HeaderApp />
     <router-view />
-    <!-- <FooterApp /> -->
+    <FooterApp />
   </div>
 </template>
 
@@ -17,13 +17,13 @@
 <script>
 import AOS from "aos";
 import "aos/dist/aos.css";
-// import FooterApp from "./components/FooterApp.vue";
+import FooterApp from "./components/FooterApp.vue";
 import HeaderApp from "./components/HeaderApp.vue";
 
 export default {
   components: {
     HeaderApp,
-    // FooterApp,
+    FooterApp,
   },
   data() {
     return {};

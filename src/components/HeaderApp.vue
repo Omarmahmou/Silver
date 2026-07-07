@@ -294,6 +294,10 @@ export default {
   display: none;
 }
 
+.mobile-menu {
+  display: none;
+}
+
 @media (max-width: 991px) {
   .header {
     height: 68px;
@@ -362,7 +366,7 @@ export default {
   }
 
   .mobile-footer {
-    margin-top: auto;
+    margin-top: 25px;
     padding-top: 25px;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
     display: flex;

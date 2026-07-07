@@ -149,7 +149,7 @@ export default {
 <style scoped>
 .product-details {
   background: #ffffff;
-  padding: 66px 45.24px 50px;
+  padding: 66px 45.24px 65px;
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.06);
 }
 
@@ -311,5 +311,26 @@ export default {
 
 .accordion-icon::before {
   content: "+";
+}
+
+@media (max-width: 991px) {
+  .product-details {
+    padding: 36px 31px 55px;
+  }
+}
+@media (max-width: 468px) {
+  .title {
+    font-size: 24px;
+  }
+  .sku {
+    font-size: 20px;
+  }
+  .title,
+  .sku,
+  .colors-section,
+  .description-section,
+  .accordion {
+    padding-left: 15px;
+  }
 }
 </style>
