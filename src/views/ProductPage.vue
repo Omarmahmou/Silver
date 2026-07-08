@@ -97,6 +97,7 @@ export default {
   methods: {
     onSelectColorIndex(index) {
       this.selectedColorIndex = index;
+      // this.selectedColorImage = this.colorImages[index];
     },
   },
 };

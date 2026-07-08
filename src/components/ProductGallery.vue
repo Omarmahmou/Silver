@@ -54,6 +54,9 @@
           :key="'color-' + index"
         >
           <img :src="image" alt="colorImage" />
+          <!-- <transition name="fade" mode="out-in">
+            <img :src="selectedImage" :key="selectedImage" alt="mainImage" />
+          </transition> -->
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
@@ -126,15 +129,12 @@ export default {
 
         on: {
           slideChange: () => {
-            const swiper = this.$refs.colorSwiper?.swiper;
-
+            const swiper = this.$refs.colorSwiper?.$swiper;
             if (!swiper) return;
-
             if (this.isSyncingFromParent) {
               this.isSyncingFromParent = false;
               return;
             }
-
             this.$emit("update:selected-color-index", swiper.activeIndex);
           },
         },
@@ -143,15 +143,15 @@ export default {
   },
   computed: {
     swiperInstance() {
-      return this.$refs.colorSwiper?.swiper;
+      return this.$refs.colorSwiper?.$swiper;
     },
   },
   watch: {
     selectedColorImage(newImage) {
       this.selectedImage = newImage || this.defaultImage;
       this.scrollToMainImage();
+      this.scrollToSlider();
     },
-    // لما اللون يتغير من ProductDetails، حرّك السلايدر (موبايل) لنفس الاندكس
     selectedColorIndex(newIndex) {
       if (!this.swiperInstance) return;
       if (this.swiperInstance.activeIndex === newIndex) return;
@@ -161,6 +161,8 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
+      console.log("ref =", this.$refs.colorSwiper);
+      console.log("keys =", Object.keys(this.$refs.colorSwiper || {}));
       if (this.swiperInstance) {
         this.swiperInstance.slideTo(this.selectedColorIndex, 0);
       }
@@ -177,6 +179,14 @@ export default {
     scrollToMainImage() {
       this.$nextTick(() => {
         const el = this.$el.querySelector(".main-image");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      });
+    },
+    scrollToSlider() {
+      this.$nextTick(() => {
+        const el = this.$el.querySelector(".mobile-slider");
         if (el) {
           el.scrollIntoView({ behavior: "smooth", block: "center" });
         }
