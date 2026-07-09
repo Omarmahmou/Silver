@@ -12,9 +12,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-html,
-body {
-  overflow-x: hidden;
+
+body,
+html {
+  overflow-x: clip;
 }
 </style>
 

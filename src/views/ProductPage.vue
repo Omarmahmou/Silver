@@ -7,7 +7,6 @@
           :selected-color-image="selectedColorImage"
           :color-images="colorImages"
           :selected-color-index="selectedColorIndex"
-          @update:selected-color-index="onSelectColorIndex"
         />
         <ProductDetails
           :product="product"
@@ -88,7 +87,7 @@ export default {
   },
   computed: {
     colorImages() {
-      return this.product.colorOptions.map((c) => c.image);
+      return this.product.colorOptions.map((color) => color.image);
     },
     selectedColorImage() {
       return this.colorImages[this.selectedColorIndex] || null;
@@ -97,7 +96,6 @@ export default {
   methods: {
     onSelectColorIndex(index) {
       this.selectedColorIndex = index;
-      // this.selectedColorImage = this.colorImages[index];
     },
   },
 };
@@ -159,10 +157,7 @@ body {
   }
   .right {
     width: 100%;
-
     box-sizing: border-box;
   }
-}
-@media (max-width: 468px) {
 }
 </style>

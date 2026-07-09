@@ -16,12 +16,11 @@
         :key="index"
         class="thumb"
         :class="{ 'thumb--hidden': !isExpanded && index >= 4 }"
-        @click="selectImage(image)"
         data-aos="zoom-in"
         :data-aos-delay="index * 100"
         data-aos-duration="700"
       >
-        <img :src="image" alt="" />
+        <img :src="image" alt="" @click="openImage(image)" />
       </div>
       <button class="toggle-btn" @click="toggleGalley">
         <svg v-if="!isExpanded" width="30" height="30" viewBox="0 0 24 24">
@@ -54,9 +53,6 @@
           :key="'color-' + index"
         >
           <img :src="image" alt="colorImage" />
-          <!-- <transition name="fade" mode="out-in">
-            <img :src="selectedImage" :key="selectedImage" alt="mainImage" />
-          </transition> -->
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
@@ -67,9 +63,6 @@
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
-import VueAwesomeSwiper from "vue-awesome-swiper";
-
-console.log(VueAwesomeSwiper);
 
 import mainImage from "@/assets/images/main-image.png";
 import gallery1 from "@/assets/images/gallery1.png";
@@ -101,7 +94,6 @@ export default {
   },
   data() {
     return {
-      defaultImage: mainImage,
       selectedImage: mainImage,
       images: [
         gallery1,
@@ -115,32 +107,17 @@ export default {
       ],
       isExpanded: false,
 
-      isSyncingFromParent: false,
       swiperOption: {
-        spaceBetween: 0,
+        speed: 800,
 
         pagination: {
           el: ".swiper-pagination",
           clickable: true,
         },
-
-        observer: true,
-        observeParents: true,
-
-        on: {
-          slideChange: () => {
-            const swiper = this.$refs.colorSwiper?.$swiper;
-            if (!swiper) return;
-            if (this.isSyncingFromParent) {
-              this.isSyncingFromParent = false;
-              return;
-            }
-            this.$emit("update:selected-color-index", swiper.activeIndex);
-          },
-        },
       },
     };
   },
+
   computed: {
     swiperInstance() {
       return this.$refs.colorSwiper?.$swiper;
@@ -149,47 +126,37 @@ export default {
   watch: {
     selectedColorImage(newImage) {
       this.selectedImage = newImage || this.defaultImage;
-      this.scrollToMainImage();
-      this.scrollToSlider();
+      this.scrollToCurrentView();
     },
     selectedColorIndex(newIndex) {
-      if (!this.swiperInstance) return;
-      if (this.swiperInstance.activeIndex === newIndex) return;
-      this.isSyncingFromParent = true;
       this.swiperInstance.slideTo(newIndex);
     },
   },
-  mounted() {
-    this.$nextTick(() => {
-      console.log("ref =", this.$refs.colorSwiper);
-      console.log("keys =", Object.keys(this.$refs.colorSwiper || {}));
-      if (this.swiperInstance) {
-        this.swiperInstance.slideTo(this.selectedColorIndex, 0);
-      }
-    });
-  },
+
   methods: {
     toggleGalley() {
       this.isExpanded = !this.isExpanded;
     },
-    selectImage(image) {
-      this.selectedImage = image;
-      this.scrollToMainImage();
+
+    openImage(image) {
+      window.Fancybox.show([
+        {
+          src: image,
+          type: "image",
+        },
+      ]);
     },
-    scrollToMainImage() {
+
+    scrollToCurrentView() {
+      const selector =
+        window.innerWidth > 991 ? ".main-image" : ".mobile-slider";
       this.$nextTick(() => {
-        const el = this.$el.querySelector(".main-image");
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-      });
-    },
-    scrollToSlider() {
-      this.$nextTick(() => {
-        const el = this.$el.querySelector(".mobile-slider");
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
+        const el = this.$el.querySelector(selector);
+        if (!el) return;
+        el.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
       });
     },
   },
@@ -305,7 +272,6 @@ export default {
   opacity: 0;
 }
 
-/* Mobile slider مخفي على الديسكتوب */
 .mobile-slider {
   display: none;
   margin-bottom: 40px;

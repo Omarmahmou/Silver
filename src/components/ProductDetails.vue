@@ -126,7 +126,6 @@ export default {
         features: false,
         specs: false,
       },
-      // selectedColorIndex: 0,
     };
   },
 
@@ -135,7 +134,6 @@ export default {
       this.openedAccordion[section] = !this.openedAccordion[section];
     },
     selectColor(option, index) {
-      // this.selectedColorIndex = index;
       this.$emit("select-color", index);
     },
   },
@@ -154,7 +152,6 @@ export default {
 }
 .title {
   font-weight: 600;
-  /* font-size: 34px; */
   color: #131313;
   padding-left: 40.76px;
   line-height: 1.2;
