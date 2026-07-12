@@ -224,6 +224,7 @@ export default {
   align-items: center;
   cursor: pointer;
   color: #717070;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .accordion-header h3 {
