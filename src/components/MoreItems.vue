@@ -185,7 +185,7 @@ export default {
 .swiper-button-prev::after {
   display: none;
 }
-::v-deep .swiper-pagination {
+.swiper-pagination {
   position: absolute !important;
   bottom: 35px !important;
   left: 50% !important;
@@ -201,7 +201,7 @@ export default {
 }
 
 ::v-deep .swiper-pagination-bullet-active {
-  background: #8d8d8d;
+  background: #121212;
 }
 
 @media (max-width: 991px) {

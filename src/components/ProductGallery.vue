@@ -6,7 +6,7 @@
       data-aos-duration="1200"
     >
       <transition name="fade" mode="out-in">
-        <img :src="selectedImage" :key="selectedImage" alt="mainImage" />
+        <img :src="currentImage" :key="currentImage" alt="mainImage" />
       </transition>
     </div>
 
@@ -49,7 +49,9 @@
     >
       <swiper :options="swiperOption" ref="colorSwiper">
         <swiper-slide
-          v-for="(image, index) in colorImages"
+          v-for="(
+            image, index
+          ) in colorImages /* هنا بيعمل loop علي colorImages اللي هي عباره عن صورة الـ color */"
           :key="'color-' + index"
         >
           <img :src="image" alt="colorImage" />
@@ -64,7 +66,6 @@
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 
-import mainImage from "@/assets/images/main-image.png";
 import gallery1 from "@/assets/images/gallery1.png";
 import gallery2 from "@/assets/images/gallery2.png";
 import gallery3 from "@/assets/images/gallery3.png";
@@ -77,11 +78,6 @@ import gallery8 from "@/assets/images/gallery8.png";
 export default {
   components: { Swiper, SwiperSlide },
   props: {
-    selectedColorImage: {
-      type: String,
-      default: null,
-    },
-
     colorImages: {
       type: Array,
       default: () => [],
@@ -94,7 +90,6 @@ export default {
   },
   data() {
     return {
-      selectedImage: mainImage,
       images: [
         gallery1,
         gallery2,
@@ -117,18 +112,27 @@ export default {
       },
     };
   },
+  // /// /////////////
+  mounted() {
+    //  دا مسئول عن اما اعمل سكرول عالسلايدر يغير الactive للعنصر اللي واقف عتده
+    this.swiperInstance.on("slideChange", () => {
+      this.$emit("select-color", this.swiperInstance.activeIndex);
+    });
+  },
 
   computed: {
     swiperInstance() {
       return this.$refs.colorSwiper?.$swiper;
     },
+
+    currentImage() {
+      return this.colorImages[this.selectedColorIndex] || null;
+    },
   },
   watch: {
-    selectedColorImage(newImage) {
-      this.selectedImage = newImage || this.defaultImage;
-      this.scrollToCurrentView();
-    },
+    // دا المسئول عن الصوره اللي هتظهر في السلايدر
     selectedColorIndex(newIndex) {
+      this.scrollToCurrentView();
       this.swiperInstance.slideTo(newIndex);
     },
   },
@@ -209,30 +213,7 @@ export default {
   pointer-events: none;
   margin-top: -24px;
 }
-.thumb:nth-child(5) {
-  transition-delay: 0s;
-}
-.thumb:nth-child(6) {
-  transition-delay: 0.06s;
-}
-.thumb:nth-child(7) {
-  transition-delay: 0.12s;
-}
-.thumb:nth-child(8) {
-  transition-delay: 0.18s;
-}
-.thumb--hidden:nth-child(5) {
-  transition-delay: 0.18s;
-}
-.thumb--hidden:nth-child(6) {
-  transition-delay: 0.12s;
-}
-.thumb--hidden:nth-child(7) {
-  transition-delay: 0.06s;
-}
-.thumb--hidden:nth-child(8) {
-  transition-delay: 0s;
-}
+
 .thumb img {
   width: 100%;
   height: 100%;
@@ -274,7 +255,7 @@ export default {
 
 .mobile-slider {
   display: none;
-  margin-bottom: 40px;
+  margin-bottom: 53px;
 }
 
 .mobile-slider .swiper-container {

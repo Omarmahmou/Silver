@@ -4,15 +4,15 @@
       <section class="product-layout">
         <ProductGallery
           class="left"
-          :selected-color-image="selectedColorImage"
           :color-images="colorImages"
           :selected-color-index="selectedColorIndex"
+          @select-color="onSelected"
         />
         <ProductDetails
           :product="product"
           :selected-color-index="selectedColorIndex"
           class="right"
-          @select-color="onSelectColorIndex"
+          @select-color="onSelected"
         />
       </section>
       <MoreItems />
@@ -71,15 +71,12 @@ export default {
             "Premium metal construction for durability and reliability",
             "Finishes resist corrosion and tarnishing",
           ],
-
           installation: ["Widespread or remote valve."],
-
           faucet: [
             "Flow rate: 1.2 gal/min (4.5 l/min)",
             "Pressure: 60 psi (4.1 bar)",
             "Drain included: Yes",
           ],
-
           spout: [`Spout reach: 6-5/16" (160 mm)`],
         },
       },
@@ -89,12 +86,9 @@ export default {
     colorImages() {
       return this.product.colorOptions.map((color) => color.image);
     },
-    selectedColorImage() {
-      return this.colorImages[this.selectedColorIndex] || null;
-    },
   },
   methods: {
-    onSelectColorIndex(index) {
+    onSelected(index) {
       this.selectedColorIndex = index;
     },
   },
@@ -106,7 +100,6 @@ body {
   background: #fafaf8;
 }
 .product-page {
-  width: 100%;
   margin-top: 54px;
 }
 

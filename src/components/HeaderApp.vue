@@ -115,7 +115,6 @@
             <div class="lang-selector">
               <span class="lang-text">EN</span>
               <svg
-                class="lang-arrow"
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
                 height="8"
@@ -196,7 +195,6 @@ export default {
 }
 .nav ul {
   display: flex;
-  list-style: none;
   gap: 53px;
   margin: 0 auto;
 }
@@ -238,7 +236,7 @@ export default {
 .actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
 }
 .search-btn {
   background: transparent;
@@ -262,10 +260,6 @@ export default {
 .lang-text {
   letter-spacing: 1.5px;
 }
-.lang-arrow {
-  display: flex;
-  align-items: center;
-}
 
 .cta-btn {
   background-color: #f0d29f;
@@ -276,7 +270,6 @@ export default {
   font-weight: 400;
   letter-spacing: 0.5px;
   transition: 0.3s;
-  display: inline-block;
 }
 .cta-btn:hover {
   background-color: #cda577;
@@ -327,7 +320,6 @@ export default {
     top: 0;
     right: 0;
     height: 100vh;
-    width: min(340px, 85vw);
     background: #121211;
     z-index: 1002;
     padding: 28px 30px;
@@ -340,7 +332,6 @@ export default {
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 0;
     margin-bottom: 40px;
   }
 
@@ -356,7 +347,6 @@ export default {
     text-decoration: none;
     font-size: 18px;
     position: relative;
-    display: inline-block;
   }
 
   .mobile-nav ul li a.active {
@@ -379,9 +369,6 @@ export default {
   }
 
   .mobile-cta {
-    width: 100%;
-    text-align: center;
-    box-sizing: border-box;
     padding: 14px 20px;
   }
   /* transition */

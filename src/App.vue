@@ -53,6 +53,5 @@ export default {
 body {
   font-family: "Konnect", sans-serif;
   background: #fafaf8;
-  margin: 0;
 }
 </style>
