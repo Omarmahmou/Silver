@@ -1,7 +1,7 @@
 <template>
   <div class="gallery">
     <div
-      class="main-image desktop-only"
+      class="main-image desktop"
       data-aos="fade-down-right"
       data-aos-duration="1200"
     >
@@ -10,18 +10,21 @@
       </transition>
     </div>
 
-    <div class="thumbs desktop-only" data-aos="zoom-in-up">
-      <div
-        v-for="(image, index) in images"
-        :key="index"
-        class="thumb"
-        :class="{ 'thumb--hidden': !isExpanded && index >= 4 }"
-        data-aos="zoom-in"
-        :data-aos-delay="index * 100"
-        data-aos-duration="700"
-      >
-        <img :src="image" alt="" @click="openImage(image)" />
+    <div class="thumbs-wrapper desktop" data-aos="zoom-in-up">
+      <div class="thumbs">
+        <div v-for="image in visibleThumbs" :key="image" class="thumb">
+          <img :src="image" alt="open image" @click="openImage(image)" />
+        </div>
       </div>
+
+      <div class="extra-thumbs" :class="{ 'extra-thumbs--open': isExpanded }">
+        <div class="thumbs">
+          <div v-for="image in extraThumbs" :key="image" class="thumb">
+            <img :src="image" alt="open image" @click="openImage(image)" />
+          </div>
+        </div>
+      </div>
+
       <button class="toggle-btn" @click="toggleGalley">
         <svg v-if="!isExpanded" width="30" height="30" viewBox="0 0 24 24">
           <path
@@ -48,12 +51,7 @@
       data-aos-duration="1200"
     >
       <swiper :options="swiperOption" ref="colorSwiper">
-        <swiper-slide
-          v-for="(
-            image, index
-          ) in colorImages /* هنا بيعمل loop علي colorImages اللي هي عباره عن صورة الـ color */"
-          :key="'color-' + index"
-        >
+        <swiper-slide v-for="(image, id) in colorImages" :key="id">
           <img :src="image" alt="colorImage" />
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
@@ -104,33 +102,35 @@ export default {
 
       swiperOption: {
         speed: 800,
-
         pagination: {
           el: ".swiper-pagination",
           clickable: true,
         },
       },
-    };
+    };  
   },
-  // /// /////////////
+
   mounted() {
-    //  دا مسئول عن اما اعمل سكرول عالسلايدر يغير الactive للعنصر اللي واقف عتده
     this.swiperInstance.on("slideChange", () => {
       this.$emit("select-color", this.swiperInstance.activeIndex);
     });
   },
 
   computed: {
+    currentImage() {
+      return this.colorImages[this.selectedColorIndex];
+    },
+    visibleThumbs() {
+      return this.images.slice(0, 4);
+    },
+    extraThumbs() {
+      return this.images.slice(4);
+    },
     swiperInstance() {
       return this.$refs.colorSwiper?.$swiper;
     },
-
-    currentImage() {
-      return this.colorImages[this.selectedColorIndex] || null;
-    },
   },
   watch: {
-    // دا المسئول عن الصوره اللي هتظهر في السلايدر
     selectedColorIndex(newIndex) {
       this.scrollToCurrentView();
       this.swiperInstance.slideTo(newIndex);
@@ -169,79 +169,19 @@ export default {
 
 <style scoped>
 .gallery {
-  width: 100%;
   max-width: 648px;
   display: flex;
   flex-direction: column;
 }
 
 .main-image {
-  width: 100%;
   aspect-ratio: 648 / 545;
   background: #fafafa;
-  margin-bottom: 70px;
-  max-height: 546px;
-  overflow: hidden;
+  margin-bottom: 83px;
 }
 .main-image img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-.thumbs {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  position: relative;
-}
-.thumb {
-  cursor: pointer;
-  aspect-ratio: 311.85 / 400.94;
-  overflow: hidden;
-  opacity: 1;
-  transform: scale(1) translateY(0);
-  max-height: 400.94px;
-  transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.5s ease,
-    margin 0.5s ease;
-}
-.thumb--hidden {
-  opacity: 0;
-  transform: scale(0.95) translateY(16px);
-  max-height: 0;
-  pointer-events: none;
-  margin-top: -24px;
-}
-
-.thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.3s ease;
-}
-.thumb:hover img {
-  transform: scale(1.03);
-}
-
-.toggle-btn {
-  width: 111px;
-  height: 73px;
-  border: none;
-  background: #111;
-  color: white;
-  cursor: pointer;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
-  z-index: 2;
-  transition: 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-.toggle-btn:hover {
-  background: #333;
 }
 
 .fade-enter-active,
@@ -253,26 +193,63 @@ export default {
   opacity: 0;
 }
 
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  position: relative;
+}
+.thumb {
+  cursor: pointer;
+  aspect-ratio: 311.85 / 400.94;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+.thumb:hover img {
+  transform: scale(1.03);
+}
+.extra-thumbs {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.8s ease-in-out, margin-top 0.8s ease-in-out;
+}
+.extra-thumbs--open {
+  max-height: 900px;
+  margin-top: 24px;
+}
+
+.toggle-btn {
+  width: 111px;
+  height: 73px;
+  border: none;
+  background: #121211;
+  color: #ffffff;
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -32px;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.toggle-btn:hover {
+  background: #333;
+}
+
 .mobile-slider {
   display: none;
   margin-bottom: 53px;
-}
-
-.mobile-slider .swiper-container {
-  width: 100%;
-  height: 320px;
-  background: #fafafa;
-  overflow: hidden;
-  padding-bottom: 34px;
-}
-.mobile-slider .swiper-slide {
-  height: 320px;
 }
 
 .mobile-slider .swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 320px;
 }
 
 .mobile-slider .swiper-slide img {
@@ -305,7 +282,7 @@ export default {
 }
 
 @media (max-width: 991px) {
-  .desktop-only {
+  .desktop {
     display: none !important;
   }
   .mobile-slider {

@@ -6,19 +6,6 @@
   </div>
 </template>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body,
-html {
-  overflow-x: clip;
-}
-</style>
-
 <script>
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -50,8 +37,10 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-body {
+body,
+html {
   font-family: "Konnect", sans-serif;
   background: #fafaf8;
+  overflow-x: clip;
 }
 </style>

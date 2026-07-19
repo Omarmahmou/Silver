@@ -7,7 +7,6 @@ import ProductPage from "@/views/ProductPage.vue";
 
 const routes = [
   { path: "/", component: ProductPage },
-
   {
     path: "/product/:id",
     component: ProductPage,

@@ -16,10 +16,12 @@
           v-for="(option, index) in product.colorOptions"
           :key="index"
           class="color-item"
-          :class="{ active: selectedColorIndex === index }"
-          @click="selectColor(option, index)"
+          :class="{
+            active: selectedColorIndex === index,
+          }"
+          @click="selectColor(index)"
         >
-          <img :src="option.color" alt="colorImage" />
+          <img :src="option.color" alt="color Image" />
         </div>
       </div>
     </div>
@@ -33,7 +35,6 @@
     <div class="accordion">
       <div class="accordion-header" @click="toggleAccordion('features')">
         <h3 :class="{ active: openedAccordion.features }">Features</h3>
-
         <span
           class="accordion-icon"
           :class="{ active: openedAccordion.features }"
@@ -128,12 +129,11 @@ export default {
       },
     };
   },
-
   methods: {
     toggleAccordion(section) {
       this.openedAccordion[section] = !this.openedAccordion[section];
     },
-    selectColor(option, index) {
+    selectColor(index) {
       this.$emit("select-color", index);
     },
   },
@@ -181,16 +181,16 @@ export default {
   width: 67.17px;
   height: 54.83px;
   cursor: pointer;
-  border: 2px solid transparent;
   box-sizing: border-box;
   transition: border-color 0.2s ease;
 }
 .color-item.active {
-  border-color: #131313;
+  border: 2px solid #131313;
 }
 .color-item img {
   width: 100%;
   height: 100%;
+  object-fit: none;
 }
 
 .description-section {
@@ -214,7 +214,7 @@ export default {
 /*  */
 .accordion {
   border-top: 2.37px solid #cacbcb;
-  padding: 25px 0;
+  padding: 25px 10px;
   padding-left: 40.76px;
 }
 
@@ -290,8 +290,7 @@ export default {
 
 .accordion-icon {
   font-size: 28px;
-  font-weight: 300;
-  display: inline-block;
+  font-weight: 400;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
@@ -305,6 +304,16 @@ export default {
 
 .accordion-icon::before {
   content: "+";
+}
+
+@media (max-width: 1200px) {
+  .title,
+  .sku,
+  .colors-section,
+  .description-section,
+  .accordion {
+    padding-left: 25px;
+  }
 }
 
 @media (max-width: 991px) {

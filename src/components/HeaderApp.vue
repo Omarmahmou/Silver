@@ -154,11 +154,7 @@ export default {
       ],
     };
   },
-  watch: {
-    mobileMenu(isOpen) {
-      document.body.style.overflow = isOpen ? "hidden" : "";
-    },
-  },
+
   methods: {
     toggleMobileMenu() {
       this.mobileMenu = !this.mobileMenu;

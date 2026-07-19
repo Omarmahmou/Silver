@@ -201,7 +201,7 @@ export default {
 }
 
 ::v-deep .swiper-pagination-bullet-active {
-  background: #121212;
+  background: #717070;
 }
 
 @media (max-width: 991px) {
